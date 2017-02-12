@@ -1,1 +1,1 @@
-# Cake.WindowsInstaller
+# Cake.Environment
