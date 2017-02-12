@@ -24,4 +24,4 @@ Task("AddToPath")
 # General Notes
 **This is an initial version and not tested thoroughly**.
 
-I've made these AddIns for use in my own cake scripts so they have only really been tested it on Windows.
+I've made these AddIns for use in my own cake scripts so they have only really been tested on Windows.
