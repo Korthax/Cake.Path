@@ -79,5 +79,13 @@ namespace Cake.Path
             _environmentWrapper.SetEnvironmentVariable("PATH", string.Join(";", parts), environmentVariableTarget);
             _log.Verbose($"Removed '{value}' from PATH.");
         }
+
+        public void Reload()
+        {
+            var machinePath = _environmentWrapper.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Machine, string.Empty);
+            var userPath = _environmentWrapper.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.User, string.Empty);
+            _environmentWrapper.SetEnvironmentVariable("PATH", $"{machinePath};{userPath}", EnvironmentVariableTarget.Process);
+            _log.Verbose("Reloaded PATH.");
+        }
     }
 }

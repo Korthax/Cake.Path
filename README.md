@@ -54,6 +54,12 @@ Task("RemoveFromPathWithSettings")
         RemoveFromPath("C:\\Python27\\", settings);
     });
 
+Task("ReloadPath")
+    .Does(() => 
+    {
+        ReloadPath();
+    });
+
 ```
 
 # General Notes
