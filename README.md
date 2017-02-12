@@ -1,23 +1,21 @@
-# Cake
-
-## Cake.Path
+# Cake.Path
 
 A Cake AddIn that extends Cake with the ability to add items to the PATH.
 
 [![cakebuild.net](https://img.shields.io/badge/WWW-cakebuild.net-blue.svg)](http://cakebuild.net/)
 
 
-### Dependencies
+## Dependencies
 
 * Cake v0.17
 
-### Including AddIn
+## Including the AddIn
 
 ```csharp
 #addin "Cake.Path"
 ```
 
-### Usage
+## Usage
 
 ```csharp
 #addin "Cake.Path"
