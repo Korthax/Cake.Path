@@ -7,11 +7,12 @@
     <PackageProjectUrl>https://github.com/CleanKludge/Cake</PackageProjectUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/CleanKludge/Cake/master/LICENSE</PackageLicenseUrl>
     <PackageTags>Cake Script Build</PackageTags>
-    <PackageVersion>1.2.0</PackageVersion>
+    <PackageVersion>1.3.0</PackageVersion>
     <RepositoryType>git</RepositoryType>
     <Copyright>Copyright (c) CleanKludge 2017</Copyright>
     <Description>AddIn that extends Cake with ability to manipulate the PATH.</Description>
     <Company>CleanKludge</Company>
+    <Version>1.3.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

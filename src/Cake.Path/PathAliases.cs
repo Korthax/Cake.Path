@@ -108,5 +108,28 @@ namespace Cake.Path
             Path.Load(context.Log)
                 .Remove(value, pathSettings);
         }
+
+        /// <summary>
+        /// Reloads an in process path
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// Task("ReloadPath")
+        ///   .Does(() => 
+        ///   {
+        ///      ReloadPath();
+        ///   });
+        /// </code>
+        /// </example>
+        /// <param name="context">The context.</param>
+        [CakeMethodAlias]
+        public static void ReloadPath(this ICakeContext context)
+        {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
+            Path.Load(context.Log)
+                .Reload();
+        }
     }
 }
