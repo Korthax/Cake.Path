@@ -2,6 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp1.0</TargetFramework>
+    <Authors>CleanKludge</Authors>
+    <RepositoryUrl>https://github.com/CleanKludge/Cake</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/CleanKludge/Cake</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/CleanKludge/Cake/master/LICENSE</PackageLicenseUrl>
+    <PackageTags>Cake Script Build</PackageTags>
+    <RepositoryType>git</RepositoryType>
+    <Copyright>Copyright (c) CleanKludge 2017</Copyright>
+    <Description>AddIn that extends Cake with ability to manipulate the PATH.</Description>
+    <Company>CleanKludge</Company>
   </PropertyGroup>
 
   <ItemGroup>
