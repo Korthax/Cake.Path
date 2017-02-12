@@ -3,7 +3,7 @@ using Cake.Core.Diagnostics;
 using Moq;
 using Xunit;
 
-namespace Cake.Path.UnitTests.GivenAnItem.ToAddToThePath
+namespace Cake.Path.UnitTests.GivenAnItem.ToRemoveFromThePath
 {
     public class WhenTheValueIsNull
     {
@@ -15,7 +15,7 @@ namespace Cake.Path.UnitTests.GivenAnItem.ToAddToThePath
 
             var subject = new Path(new NullLog(), environmentWrapper.Object);
 
-            Assert.Throws<ArgumentNullException>(() => { subject.Add(null, new PathSettings { Target = PathTarget.User }); });
+            Assert.Throws<ArgumentNullException>(() => { subject.Remove(null, new PathSettings { Target = PathTarget.User }); });
         }
     }
 }

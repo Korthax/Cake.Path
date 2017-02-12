@@ -1,11 +1,12 @@
 ﻿using System;
 using Cake.Core.Diagnostics;
+using Cake.Core.IO;
 using Moq;
 using Xunit;
 
-namespace Cake.Path.UnitTests.GivenAnItem.ToAddToThePath
+namespace Cake.Path.UnitTests.GivenAnItem.ToRemoveFromThePath
 {
-    public class WhenTheValueIsNull
+    public class WhenTheSettingsAreNull
     {
         [Fact]
         public void ThenAnArgumentExceptionIsRaised()
@@ -15,7 +16,7 @@ namespace Cake.Path.UnitTests.GivenAnItem.ToAddToThePath
 
             var subject = new Path(new NullLog(), environmentWrapper.Object);
 
-            Assert.Throws<ArgumentNullException>(() => { subject.Add(null, new PathSettings { Target = PathTarget.User }); });
+            Assert.Throws<ArgumentNullException>(() => { subject.Remove(new DirectoryPath("test"), null); });
         }
     }
 }

@@ -3,20 +3,20 @@ using Cake.Core.Diagnostics;
 using Moq;
 using Xunit;
 
-namespace Cake.Path.UnitTests.GivenAnItem.ToAddToThePath
+namespace Cake.Path.UnitTests.GivenAnItem.ToRemoveFromThePath
 {
-    public class WhenTheItemAlreadyExists
+    public class WhenTheItemExistsInThePath
     {
         [Fact]
-        public void ThenThePathIsNotModified()
+        public void ThenTheItemIsRemovedFromThePath()
         {
             var environmentWrapper = new Mock<IEnvironmentWrapper>();
             environmentWrapper.Setup(x => x.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Machine, string.Empty)).Returns("test;test2");
 
             var subject = new Path(new NullLog(), environmentWrapper.Object);
-            subject.Add("test", new PathSettings { Target = PathTarget.Machine });
+            subject.Remove("test", new PathSettings { Target = PathTarget.Machine });
 
-            environmentWrapper.Verify(x => x.SetEnvironmentVariable(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EnvironmentVariableTarget>()), Times.Never);
+            environmentWrapper.Verify(x => x.SetEnvironmentVariable("PATH", "test2", EnvironmentVariableTarget.Machine), Times.Once);
         }
     }
 }
