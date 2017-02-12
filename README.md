@@ -28,6 +28,32 @@ Task("AddToPath")
         AddToPath("C:\\Python27\\");
     });
 
+Task("AddToPathWithSettings")
+    .Does(() => 
+    {
+        var settings = new PathSettings {
+           Target = PathTarget.User
+        }
+        
+        AddToPath("C:\\Python27\\", settings);
+    });
+
+Task("RemoveFromPath")
+    .Does(() => 
+    {
+        RemoveFromPath("C:\\Python27\\");
+    });
+
+Task("RemoveFromPathWithSettings")
+    .Does(() => 
+    {
+        var settings = new PathSettings {
+           Target = PathTarget.Machine
+        }
+        
+        RemoveFromPath("C:\\Python27\\", settings);
+    });
+
 ```
 
 # General Notes

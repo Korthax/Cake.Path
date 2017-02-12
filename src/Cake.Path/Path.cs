@@ -21,13 +21,21 @@ namespace Cake.Path
             _environmentWrapper = environmentWrapper;
         }
 
-        public void Add(DirectoryPath value)
+        public void Add(DirectoryPath value, PathSettings pathSettings)
         {
             if (value == null)
                 throw new ArgumentNullException(nameof(value), "Value to add to path is null.");
 
+            if (pathSettings == null)
+                throw new ArgumentNullException(nameof(pathSettings), "Path settings is null.");
+
+            var environmentVariableTarget = pathSettings
+                .Target
+                .GetValueOrDefault(PathTarget.User)
+                .GetTarget();
+
             var parts = _environmentWrapper
-                .GetEnvironmentVariable("PATH", string.Empty)
+                .GetEnvironmentVariable("PATH", environmentVariableTarget, string.Empty)
                 .Split(';')
                 .Where(x => !string.IsNullOrWhiteSpace(x))
                 .ToList();
@@ -39,8 +47,37 @@ namespace Cake.Path
             }
 
             parts.Add(value.FullPath);
-            _environmentWrapper.SetEnvironmentVariable("PATH", string.Join(";", parts));
+            _environmentWrapper.SetEnvironmentVariable("PATH", string.Join(";", parts), environmentVariableTarget);
             _log.Verbose($"Added '{value}' to PATH.");
+        }
+
+        public void Remove(DirectoryPath value, PathSettings pathSettings)
+        {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value), "Value to add to path is null.");
+
+            if (pathSettings == null)
+                throw new ArgumentNullException(nameof(pathSettings), "Path settings is null.");
+
+            var environmentVariableTarget = pathSettings
+                .Target
+                .GetValueOrDefault(PathTarget.User)
+                .GetTarget();
+
+            var parts = _environmentWrapper
+                .GetEnvironmentVariable("PATH", environmentVariableTarget, string.Empty)
+                .Split(';')
+                .Where(x => !string.IsNullOrWhiteSpace(x))
+                .ToList();
+
+            if (!parts.Remove(value.FullPath))
+            {
+                _log.Verbose($"PATH does not contain '{value}'.");
+                return;
+            }
+
+            _environmentWrapper.SetEnvironmentVariable("PATH", string.Join(";", parts), environmentVariableTarget);
+            _log.Verbose($"Removed '{value}' from PATH.");
         }
     }
 }

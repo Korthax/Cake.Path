@@ -8,7 +8,8 @@
     <TargetFramework>net45</TargetFramework>    
     <ApplicationIcon />    
     <OutputTypeEx>library</OutputTypeEx>    
-    <StartupObject />
+    <StartupObject />    
+    <Version>1.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
