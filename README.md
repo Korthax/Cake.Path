@@ -1,4 +1,4 @@
-# Cake AddIns
+# Cake
 ## Cake.Path
 
 A Cake AddIn that extends Cake with the ability to add items to the PATH.
