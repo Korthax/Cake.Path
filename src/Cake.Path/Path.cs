@@ -5,11 +5,19 @@ using Cake.Core.IO;
 
 namespace Cake.Path
 {
+    /// <summary>
+    /// Class that represents the Windows PATH environment variable.
+    /// </summary>
     public class Path
     {
         private readonly IEnvironmentWrapper _environmentWrapper;
         private readonly ICakeLog _log;
 
+        /// <summary>
+        /// Loads a path.
+        /// </summary>
+        /// <param name="log">The Cake logger.</param>
+        /// <returns>Returns a <c>Path</c>.</returns>
         public static Path Load(ICakeLog log)
         {
             return new Path(log, new EnvironmentWrapper());
@@ -21,6 +29,12 @@ namespace Cake.Path
             _environmentWrapper = environmentWrapper;
         }
 
+        /// <summary>
+        /// Adds a value to the path.
+        /// </summary>
+        /// <param name="value">Item to be added to the path.</param>
+        /// <param name="pathSettings">Path settings used for the value.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when either the <c>DirectoryPath</c> or <c>PathSettings</c> is null.</exception>
         public void Add(DirectoryPath value, PathSettings pathSettings)
         {
             if (value == null)
@@ -51,6 +65,12 @@ namespace Cake.Path
             _log.Verbose($"Added '{value}' to PATH.");
         }
 
+        /// <summary>
+        /// Removes a value from the PATH. If the item is not found in the path then nothing will happen.
+        /// </summary>
+        /// <param name="value">Item to be removed to the path.</param>
+        /// <param name="pathSettings">Path settings used for the value.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when either the <c>DirectoryPath</c> or <c>PathSettings</c> is null.</exception>
         public void Remove(DirectoryPath value, PathSettings pathSettings)
         {
             if (value == null)
@@ -80,6 +100,9 @@ namespace Cake.Path
             _log.Verbose($"Removed '{value}' from PATH.");
         }
 
+        /// <summary>
+        /// Reloads the in process PATH environment variable.
+        /// </summary>
         public void Reload()
         {
             var machinePath = _environmentWrapper.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Machine, string.Empty);

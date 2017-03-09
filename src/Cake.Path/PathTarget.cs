@@ -1,7 +1,7 @@
 ﻿namespace Cake.Path
 {
     /// <summary>
-    /// Location of the PATH environment variable
+    /// Location of the PATH environment variable.
     /// </summary>
     public enum PathTarget
     {
