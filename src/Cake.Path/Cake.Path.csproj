@@ -2,18 +2,20 @@
 
   <PropertyGroup>
     <TargetFramework>net45</TargetFramework>
-    <Authors>CleanKludge</Authors>
-    <RepositoryUrl>https://github.com/CleanKludge/Cake</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/CleanKludge/Cake</PackageProjectUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/CleanKludge/Cake/master/LICENSE</PackageLicenseUrl>
+    <Authors>Steve Phillips</Authors>
+    <RepositoryUrl>https://github.com/CleanKludge/Cake.Path</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/CleanKludge/Cake.Path</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/CleanKludge/Cake.Path/master/LICENSE</PackageLicenseUrl>
     <PackageTags>Cake Script Build</PackageTags>
-    <PackageVersion>1.3.0</PackageVersion>
+    <PackageVersion>1.3.1</PackageVersion>
     <RepositoryType>git</RepositoryType>
-    <Copyright>Copyright (c) CleanKludge 2017</Copyright>
+    <Copyright>Copyright (c) Steve Phillips 2017</Copyright>
     <Description>AddIn that extends Cake with ability to manipulate the PATH.</Description>
     <Company>CleanKludge</Company>
-    <Version>1.3.0</Version>
+    <Version>1.3.1</Version>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
+    <FileVersion>1.3.1.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
