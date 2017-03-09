@@ -6,13 +6,13 @@ using Cake.Core.IO;
 namespace Cake.Path
 {
     /// <summary>
-    /// Contains functionality for manipulating the path
+    /// Contains functionality for manipulating the path.
     /// </summary>
     [CakeAliasCategory("Path")]
     public static class PathAliases
     {
         /// <summary>
-        /// Adds a value to the path
+        /// Adds a value to the path.
         /// </summary>
         /// <example>
         /// <code>
@@ -24,7 +24,8 @@ namespace Cake.Path
         /// </code>
         /// </example>
         /// <param name="context">The context.</param>
-        /// <param name="value">Item to add</param>
+        /// <param name="value">Item to add.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the <c>ICakeContext</c> is null.</exception>
         [CakeMethodAlias]
         public static void AddToPath(this ICakeContext context, DirectoryPath value)
         {
@@ -32,7 +33,7 @@ namespace Cake.Path
         }
 
         /// <summary>
-        /// Adds a value to the path
+        /// Adds a value to the path.
         /// </summary>
         /// <example>
         /// <code>
@@ -48,8 +49,9 @@ namespace Cake.Path
         /// </code>
         /// </example>
         /// <param name="context">The context.</param>
-        /// <param name="value">Item to add</param>
-        /// <param name="pathSettings">Settings for the PATH</param>
+        /// <param name="value">Item to add.</param>
+        /// <param name="pathSettings">Settings for the PATH.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the <c>ICakeContext</c> is null.</exception>
         [CakeMethodAlias]
         public static void AddToPath(this ICakeContext context, DirectoryPath value, PathSettings pathSettings)
         {
@@ -61,7 +63,7 @@ namespace Cake.Path
         }
 
         /// <summary>
-        /// Removes a value from the path
+        /// Removes a value from the path.
         /// </summary>
         /// <example>
         /// <code>
@@ -73,7 +75,8 @@ namespace Cake.Path
         /// </code>
         /// </example>
         /// <param name="context">The context.</param>
-        /// <param name="value">Item to remove</param>
+        /// <param name="value">Item to remove.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the <c>ICakeContext</c> is null.</exception>
         [CakeMethodAlias]
         public static void RemoveFromPath(this ICakeContext context, DirectoryPath value)
         {
@@ -81,7 +84,7 @@ namespace Cake.Path
         }
 
         /// <summary>
-        /// Removes a value from the path
+        /// Removes a value from the path.
         /// </summary>
         /// <example>
         /// <code>
@@ -97,8 +100,9 @@ namespace Cake.Path
         /// </code>
         /// </example>
         /// <param name="context">The context.</param>
-        /// <param name="value">Item to remove</param>
-        /// <param name="pathSettings">Settings for the PATH</param>
+        /// <param name="value">Item to remove.</param>
+        /// <param name="pathSettings">Settings for the PATH.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the <c>ICakeContext</c> is null.</exception>
         [CakeMethodAlias]
         public static void RemoveFromPath(this ICakeContext context, DirectoryPath value, PathSettings pathSettings)
         {
@@ -110,7 +114,7 @@ namespace Cake.Path
         }
 
         /// <summary>
-        /// Reloads an in process path
+        /// Reloads an in process path.
         /// </summary>
         /// <example>
         /// <code>
@@ -122,6 +126,7 @@ namespace Cake.Path
         /// </code>
         /// </example>
         /// <param name="context">The context.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the <c>ICakeContext</c> is null.</exception>
         [CakeMethodAlias]
         public static void ReloadPath(this ICakeContext context)
         {
