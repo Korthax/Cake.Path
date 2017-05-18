@@ -80,7 +80,7 @@ Task("GetEnvironmentPathWithSettings")
 ```
 
 # General Notes
-** Please note Target is only available on net45 **
+**Please note Target is only available on net45**
 **This is an initial version and not tested thoroughly**.
 
 I've made these AddIns for use in my own cake scripts therefore they have only been tested on Windows.
