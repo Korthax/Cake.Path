@@ -1,22 +1,22 @@
-﻿using System;
-using Cake.Core.Diagnostics;
+﻿using Cake.Core.Diagnostics;
 using Moq;
-using Xunit;
+using NUnit.Framework;
 
 namespace Cake.Path.UnitTests.GivenAnItem.ToRemoveFromThePath
 {
+    [TestFixture]
     public class WhenTheItemExistsInThePath
     {
-        [Fact]
+        [Test]
         public void ThenTheItemIsRemovedFromThePath()
         {
             var environmentWrapper = new Mock<IEnvironmentWrapper>();
-            environmentWrapper.Setup(x => x.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Machine, string.Empty)).Returns("test;test2");
+            environmentWrapper.Setup(x => x.GetEnvironmentVariable("PATH", PathTarget.Machine, string.Empty)).Returns("test;test2");
 
             var subject = new Path(new NullLog(), environmentWrapper.Object);
             subject.Remove("test", new PathSettings { Target = PathTarget.Machine });
 
-            environmentWrapper.Verify(x => x.SetEnvironmentVariable("PATH", "test2", EnvironmentVariableTarget.Machine), Times.Once);
+            environmentWrapper.Verify(x => x.SetEnvironmentVariable("PATH", "test2", PathTarget.Machine), Times.Once);
         }
     }
 }

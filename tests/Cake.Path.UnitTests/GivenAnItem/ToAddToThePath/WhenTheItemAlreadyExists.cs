@@ -1,22 +1,22 @@
-﻿using System;
-using Cake.Core.Diagnostics;
+﻿using Cake.Core.Diagnostics;
 using Moq;
-using Xunit;
+using NUnit.Framework;
 
 namespace Cake.Path.UnitTests.GivenAnItem.ToAddToThePath
 {
+    [TestFixture]
     public class WhenTheItemAlreadyExists
     {
-        [Fact]
+        [Test]
         public void ThenThePathIsNotModified()
         {
             var environmentWrapper = new Mock<IEnvironmentWrapper>();
-            environmentWrapper.Setup(x => x.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Machine, string.Empty)).Returns("test;test2");
+            environmentWrapper.Setup(x => x.GetEnvironmentVariable("PATH", PathTarget.Machine, string.Empty)).Returns("test;test2");
 
             var subject = new Path(new NullLog(), environmentWrapper.Object);
             subject.Add("test", new PathSettings { Target = PathTarget.Machine });
 
-            environmentWrapper.Verify(x => x.SetEnvironmentVariable(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EnvironmentVariableTarget>()), Times.Never);
+            environmentWrapper.Verify(x => x.SetEnvironmentVariable(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<PathTarget>()), Times.Never);
         }
     }
 }

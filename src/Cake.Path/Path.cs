@@ -8,7 +8,7 @@ namespace Cake.Path
     /// <summary>
     /// Class that represents the Windows PATH environment variable.
     /// </summary>
-    public class Path
+    internal class Path
     {
         private readonly IEnvironmentWrapper _environmentWrapper;
         private readonly ICakeLog _log;
@@ -43,13 +43,12 @@ namespace Cake.Path
             if (pathSettings == null)
                 throw new ArgumentNullException(nameof(pathSettings), "Path settings is null.");
 
-            var environmentVariableTarget = pathSettings
+            var pathTarget = pathSettings
                 .Target
-                .GetValueOrDefault(PathTarget.User)
-                .GetTarget();
+                .GetValueOrDefault(PathTarget.User);
 
             var parts = _environmentWrapper
-                .GetEnvironmentVariable("PATH", environmentVariableTarget, string.Empty)
+                .GetEnvironmentVariable("PATH", pathTarget, string.Empty)
                 .Split(';')
                 .Where(x => !string.IsNullOrWhiteSpace(x))
                 .ToList();
@@ -61,7 +60,7 @@ namespace Cake.Path
             }
 
             parts.Add(value.FullPath);
-            _environmentWrapper.SetEnvironmentVariable("PATH", string.Join(";", parts), environmentVariableTarget);
+            _environmentWrapper.SetEnvironmentVariable("PATH", string.Join(";", parts), pathTarget);
             _log.Verbose($"Added '{value}' to PATH.");
         }
 
@@ -79,13 +78,12 @@ namespace Cake.Path
             if (pathSettings == null)
                 throw new ArgumentNullException(nameof(pathSettings), "Path settings is null.");
 
-            var environmentVariableTarget = pathSettings
+            var pathTarget = pathSettings
                 .Target
-                .GetValueOrDefault(PathTarget.User)
-                .GetTarget();
+                .GetValueOrDefault(PathTarget.User);
 
             var parts = _environmentWrapper
-                .GetEnvironmentVariable("PATH", environmentVariableTarget, string.Empty)
+                .GetEnvironmentVariable("PATH", pathTarget, string.Empty)
                 .Split(';')
                 .Where(x => !string.IsNullOrWhiteSpace(x))
                 .ToList();
@@ -96,7 +94,7 @@ namespace Cake.Path
                 return;
             }
 
-            _environmentWrapper.SetEnvironmentVariable("PATH", string.Join(";", parts), environmentVariableTarget);
+            _environmentWrapper.SetEnvironmentVariable("PATH", string.Join(";", parts), pathTarget);
             _log.Verbose($"Removed '{value}' from PATH.");
         }
 
@@ -105,9 +103,14 @@ namespace Cake.Path
         /// </summary>
         public void Reload()
         {
-            var machinePath = _environmentWrapper.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Machine, string.Empty);
-            var userPath = _environmentWrapper.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.User, string.Empty);
-            _environmentWrapper.SetEnvironmentVariable("PATH", $"{machinePath};{userPath}", EnvironmentVariableTarget.Process);
+#if (NETSTANDARD1_6)
+            var userPath = _environmentWrapper.GetEnvironmentVariable("PATH", PathTarget.User, string.Empty);
+            _environmentWrapper.SetEnvironmentVariable("PATH", $"{userPath}", PathTarget.Process);
+#else
+            var machinePath = _environmentWrapper.GetEnvironmentVariable("PATH", PathTarget.Machine, string.Empty);
+            var userPath = _environmentWrapper.GetEnvironmentVariable("PATH", PathTarget.User, string.Empty);
+            _environmentWrapper.SetEnvironmentVariable("PATH", $"{machinePath};{userPath}", PathTarget.Process);
+#endif
             _log.Verbose("Reloaded PATH.");
         }
     }

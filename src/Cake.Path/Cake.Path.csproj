@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net45</TargetFramework>
+    <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
     <Authors>Steve Phillips</Authors>
     <RepositoryUrl>https://github.com/CleanKludge/Cake.Path</RepositoryUrl>
     <PackageProjectUrl>https://github.com/CleanKludge/Cake.Path</PackageProjectUrl>
@@ -28,7 +28,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cake.Core" Version="0.17.0" />
+    <PackageReference Include="Cake.Core" Version="0.19.5" />
   </ItemGroup>
 
 </Project>

@@ -5,7 +5,7 @@ namespace Cake.Path
     /// <summary>
     /// Wrapper for accessing the environment.
     /// </summary>
-    public class EnvironmentWrapper : IEnvironmentWrapper
+    internal class EnvironmentWrapper : IEnvironmentWrapper
     {
         /// <summary>
         /// Gets an environment variable.
@@ -19,9 +19,13 @@ namespace Cake.Path
         /// <param name="target">The location of the environment variable.</param>
         /// <param name="default">The value to return when the variable is not found.</param>
         /// <returns>Returns a <c>string</c> containing the environment variable</returns>
-        public string GetEnvironmentVariable(string variable, EnvironmentVariableTarget target, string @default = "")
+        public string GetEnvironmentVariable(string variable, PathTarget target, string @default = "")
         {
-            return Environment.GetEnvironmentVariable(variable, target) ?? @default;
+#if (NETSTANDARD1_6)
+            return Environment.GetEnvironmentVariable(variable) ?? @default;
+#else
+            return Environment.GetEnvironmentVariable(variable, target.GetTarget()) ?? @default;
+#endif
         }
 
         /// <summary>
@@ -35,9 +39,13 @@ namespace Cake.Path
         /// <param name="variable">The name of the environment variable to set.</param>
         /// <param name="value">The value of the environment variable.</param>
         /// <param name="target">The location of the environment variable.</param>
-        public void SetEnvironmentVariable(string variable, string value, EnvironmentVariableTarget target)
+        public void SetEnvironmentVariable(string variable, string value, PathTarget target)
         {
-            Environment.SetEnvironmentVariable(variable, value, target);
+#if (NETSTANDARD1_6)
+            Environment.SetEnvironmentVariable(variable, value);
+#else
+            Environment.SetEnvironmentVariable(variable, value, target.GetTarget());
+#endif
         }
     }
 }

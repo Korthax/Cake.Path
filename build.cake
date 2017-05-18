@@ -1,7 +1,19 @@
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
+var version = Argument("version", "*");
+
+Task("Clean")
+    .Does(() =>
+    {
+        CleanDirectories("./artifacts/Cake.Path");
+        CleanDirectories("./src/**/bin");
+        CleanDirectories("./src/**/obj");
+        CleanDirectories("./tests/**/bin");
+        CleanDirectories("./tests/**/obj");
+    });
 
 Task("Restore")
+    .IsDependentOn("Clean")
     .Does(() =>
     {
         var settings = new DotNetCoreRestoreSettings
@@ -12,13 +24,14 @@ Task("Restore")
         DotNetCoreRestore(settings);
     });
 
-Task("Build")
+Task("BuildNet45")
     .IsDependentOn("Restore")
     .Does(() =>
     {
         var settings = new DotNetCoreBuildSettings
         {
-            Configuration = configuration
+            Configuration = configuration,
+            Framework = "net45"
         };
 
         foreach(var file in GetFiles("./src/*/*.csproj"))
@@ -27,13 +40,46 @@ Task("Build")
         }
     });
 
+Task("BuildNetStandard1.6")
+    .IsDependentOn("BuildNet45")
+    .Does(() =>
+    {
+        var settings = new DotNetCoreBuildSettings
+        {
+            Configuration = configuration,
+            Framework = "netstandard1.6"
+        };
+
+        foreach(var file in GetFiles("./src/*/*.csproj"))
+        {
+            DotNetCoreBuild(file.ToString(), settings);
+        }
+    });
+
+
+Task("BuildNetCoreApp1.1")
+    .IsDependentOn("BuildNetStandard1.6")
+    .Does(() =>
+    {
+        var settings = new DotNetCoreBuildSettings
+        {
+            Configuration = "Debug",
+            Framework = "netcoreapp1.1"
+        };
+
+        foreach(var file in GetFiles("./tests/*/*.csproj"))
+        {
+            DotNetCoreBuild(file.ToString(), settings);
+        }
+    });
+
 Task("Test")
-    .IsDependentOn("Build")
+    .IsDependentOn("BuildNetCoreApp1.1")
     .Does(() =>
     {
         var settings = new DotNetCoreTestSettings
         {
-            Configuration = configuration
+            Configuration = "Debug"
         };
 
         foreach(var file in GetFiles("./tests/*/*.csproj"))

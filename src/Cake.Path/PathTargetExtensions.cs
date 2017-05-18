@@ -5,8 +5,9 @@ namespace Cake.Path
     /// <summary>
     /// Extensions for the the PathTarget enum.
     /// </summary>
-    public static class PathTargetExtensions
+    internal static class PathTargetExtensions
     {
+#if (NET45)
         /// <summary>
         /// Converts to <c>PathTarget</c> to an <c>EnvironmentVariableTarget</c>.
         /// </summary>
@@ -31,5 +32,6 @@ namespace Cake.Path
                     throw new ArgumentOutOfRangeException(nameof(self), self, $"Unknown {typeof(PathTarget).Name} value '{self}'.");
             }
         }
+#endif
     }
 }

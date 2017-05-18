@@ -14,7 +14,7 @@ namespace Cake.Path
         /// <param name="target">The location of the environment variable.</param>
         /// <param name="default">The value to return when the variable is not found.</param>
         /// <returns>Returns a <c>string</c> containing the environment variable</returns>
-        string GetEnvironmentVariable(string variable, EnvironmentVariableTarget target, string @default = "");
+        string GetEnvironmentVariable(string variable, PathTarget target, string @default = "");
 
         /// <summary>
         /// Sets an environment variable.
@@ -22,6 +22,6 @@ namespace Cake.Path
         /// <param name="variable">The name of the environment variable to set.</param>
         /// <param name="value">The value of the environment variable.</param>
         /// <param name="target">The location of the environment variable.</param>
-        void SetEnvironmentVariable(string variable, string value, EnvironmentVariableTarget target);
+        void SetEnvironmentVariable(string variable, string value, PathTarget target);
     }
 }

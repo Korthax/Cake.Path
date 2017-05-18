@@ -1,18 +1,20 @@
 ﻿using System;
-using Xunit;
+using NUnit.Framework;
 
 namespace Cake.Path.UnitTests.GivenAPathTarget
 {
+#if (NET45)
+    [TestFixture]
     public class WhenConvertingToAnEnvironmentVariableTarget
     {
-        [Theory]
-        [InlineData(PathTarget.User, EnvironmentVariableTarget.User)]
-        [InlineData(PathTarget.Machine, EnvironmentVariableTarget.Machine)]
-        [InlineData(PathTarget.Process, EnvironmentVariableTarget.Process)]
+        [TestCase(PathTarget.User, EnvironmentVariableTarget.User)]
+        [TestCase(PathTarget.Machine, EnvironmentVariableTarget.Machine)]
+        [TestCase(PathTarget.Process, EnvironmentVariableTarget.Process)]
         public void ThenTheCorrectTypeIsMapped(PathTarget input, EnvironmentVariableTarget expected)
         {
             var result = input.GetTarget();
-            Assert.Equal(result, expected);
+            Assert.That(result, Is.EqualTo(expected));
         }
     }
+#endif
 }
