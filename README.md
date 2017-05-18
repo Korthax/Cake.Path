@@ -33,7 +33,7 @@ Task("AddToPathWithSettings")
     .Does(() => 
     {
         var settings = new PathSettings {
-           Target = PathTarget.User
+           Target = PathTarget.User // Target is only available in net45
         }
         
         AddToPath("C:\\Python27\\", settings);
@@ -49,7 +49,7 @@ Task("RemoveFromPathWithSettings")
     .Does(() => 
     {
         var settings = new PathSettings {
-           Target = PathTarget.Machine
+           Target = PathTarget.Machine // Target is only available in net45
         }
         
         RemoveFromPath("C:\\Python27\\", settings);
@@ -61,9 +61,26 @@ Task("ReloadPath")
         ReloadPath();
     });
 
+Task("GetEnvironmentPath")
+    .Does(() => 
+    {
+        string path = GetEnvironmentPath();
+    });
+
+Task("GetEnvironmentPathWithSettings")
+    .Does(() => 
+    {
+        var settings = new PathSettings {
+           Target = PathTarget.Machine // Target is only available in net45
+        }
+        
+        string path = GetEnvironmentPath(settings);
+    });
+
 ```
 
 # General Notes
+** Please note Target is only available on net45 **
 **This is an initial version and not tested thoroughly**.
 
 I've made these AddIns for use in my own cake scripts therefore they have only been tested on Windows.
