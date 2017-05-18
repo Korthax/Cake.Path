@@ -24,27 +24,17 @@ Task("Restore")
         DotNetCoreRestore(settings);
     });
 
-Task("BuildNet45")
+Task("BuildSource")
     .IsDependentOn("Restore")
     .Does(() =>
     {
-        var settings = new DotNetCoreBuildSettings
+        var settingsNet45 = new DotNetCoreBuildSettings
         {
             Configuration = configuration,
             Framework = "net45"
         };
 
-        foreach(var file in GetFiles("./src/*/*.csproj"))
-        {
-            DotNetCoreBuild(file.ToString(), settings);
-        }
-    });
-
-Task("BuildNetStandard1.6")
-    .IsDependentOn("BuildNet45")
-    .Does(() =>
-    {
-        var settings = new DotNetCoreBuildSettings
+        var settingsNetStandard = new DotNetCoreBuildSettings
         {
             Configuration = configuration,
             Framework = "netstandard1.6"
@@ -52,16 +42,22 @@ Task("BuildNetStandard1.6")
 
         foreach(var file in GetFiles("./src/*/*.csproj"))
         {
-            DotNetCoreBuild(file.ToString(), settings);
+            DotNetCoreBuild(file.ToString(), settingsNet45);
+            DotNetCoreBuild(file.ToString(), settingsNetStandard);
         }
     });
 
-
-Task("BuildNetCoreApp1.1")
-    .IsDependentOn("BuildNetStandard1.6")
+Task("BuildTests")
+    .IsDependentOn("BuildSource")
     .Does(() =>
     {
-        var settings = new DotNetCoreBuildSettings
+        var settingsNet45 = new DotNetCoreBuildSettings
+        {
+            Configuration = "Debug",
+            Framework = "net45"
+        };
+
+        var settingsNetCoreApp = new DotNetCoreBuildSettings
         {
             Configuration = "Debug",
             Framework = "netcoreapp1.1"
@@ -69,22 +65,31 @@ Task("BuildNetCoreApp1.1")
 
         foreach(var file in GetFiles("./tests/*/*.csproj"))
         {
-            DotNetCoreBuild(file.ToString(), settings);
+            DotNetCoreBuild(file.ToString(), settingsNet45);
+            DotNetCoreBuild(file.ToString(), settingsNetCoreApp);
         }
     });
 
 Task("Test")
-    .IsDependentOn("BuildNetCoreApp1.1")
+    .IsDependentOn("BuildTests")
     .Does(() =>
     {
-        var settings = new DotNetCoreTestSettings
+        var settingsNetCoreApp = new DotNetCoreTestSettings
         {
-            Configuration = "Debug"
+            Configuration = "Debug",
+            Framework = "netcoreapp1.1"
+        };
+
+        var settingsNet45 = new DotNetCoreTestSettings
+        {
+            Configuration = "Debug",
+            Framework = "net45"
         };
 
         foreach(var file in GetFiles("./tests/*/*.csproj"))
         {
-            DotNetCoreTest(file.ToString(), settings);
+            DotNetCoreTest(file.ToString(), settingsNetCoreApp);
+            DotNetCoreTest(file.ToString(), settingsNet45);
         }
     });
 
