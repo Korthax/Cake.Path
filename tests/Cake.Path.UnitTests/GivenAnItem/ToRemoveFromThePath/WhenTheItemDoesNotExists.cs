@@ -13,7 +13,7 @@ namespace Cake.Path.UnitTests.GivenAnItem.ToRemoveFromThePath
             var environmentWrapper = new Mock<IEnvironmentWrapper>();
             environmentWrapper.Setup(x => x.GetEnvironmentVariable("PATH", PathTarget.User, string.Empty)).Returns("test;test2");
 
-            var subject = new Path(new NullLog(), environmentWrapper.Object);
+            var subject = new PathWrapper(new NullLog(), environmentWrapper.Object);
             subject.Remove("test3", new PathSettings { Target = PathTarget.User });
 
             environmentWrapper.Verify(x => x.SetEnvironmentVariable(It.IsAny<string>(), It.IsAny<string>(), PathTarget.User), Times.Never);

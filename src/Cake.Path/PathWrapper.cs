@@ -5,36 +5,22 @@ using Cake.Core.IO;
 
 namespace Cake.Path
 {
-    /// <summary>
-    /// Class that represents the Windows PATH environment variable.
-    /// </summary>
-    internal class Path
+    internal class PathWrapper
     {
         private readonly IEnvironmentWrapper _environmentWrapper;
         private readonly ICakeLog _log;
 
-        /// <summary>
-        /// Loads a path.
-        /// </summary>
-        /// <param name="log">The Cake logger.</param>
-        /// <returns>Returns a <c>Path</c>.</returns>
-        public static Path Load(ICakeLog log)
+        public static PathWrapper Load(ICakeLog log)
         {
-            return new Path(log, new EnvironmentWrapper());
+            return new PathWrapper(log, new EnvironmentWrapper());
         }
 
-        internal Path(ICakeLog log, IEnvironmentWrapper environmentWrapper)
+        internal PathWrapper(ICakeLog log, IEnvironmentWrapper environmentWrapper)
         {
             _log = log;
             _environmentWrapper = environmentWrapper;
         }
 
-        /// <summary>
-        /// Adds a value to the path.
-        /// </summary>
-        /// <param name="value">Item to be added to the path.</param>
-        /// <param name="pathSettings">Path settings used for the value.</param>
-        /// <exception cref="System.ArgumentNullException">Thrown when either the <c>DirectoryPath</c> or <c>PathSettings</c> is null.</exception>
         public void Add(DirectoryPath value, PathSettings pathSettings)
         {
             if (value == null)
@@ -64,12 +50,6 @@ namespace Cake.Path
             _log.Verbose($"Added '{value}' to PATH.");
         }
 
-        /// <summary>
-        /// Removes a value from the PATH. If the item is not found in the path then nothing will happen.
-        /// </summary>
-        /// <param name="value">Item to be removed to the path.</param>
-        /// <param name="pathSettings">Path settings used for the value.</param>
-        /// <exception cref="System.ArgumentNullException">Thrown when either the <c>DirectoryPath</c> or <c>PathSettings</c> is null.</exception>
         public void Remove(DirectoryPath value, PathSettings pathSettings)
         {
             if (value == null)
@@ -98,9 +78,6 @@ namespace Cake.Path
             _log.Verbose($"Removed '{value}' from PATH.");
         }
 
-        /// <summary>
-        /// Reloads the in process PATH environment variable.
-        /// </summary>
         public void Reload()
         {
 #if (NETSTANDARD1_6)
@@ -112,6 +89,15 @@ namespace Cake.Path
             _environmentWrapper.SetEnvironmentVariable("PATH", $"{machinePath};{userPath}", PathTarget.Process);
 #endif
             _log.Verbose("Reloaded PATH.");
+        }
+
+        public string Get(PathSettings pathSettings)
+        {
+            var pathTarget = pathSettings
+                .Target
+                .GetValueOrDefault(PathTarget.User);
+
+            return _environmentWrapper.GetEnvironmentVariable("PATH", pathTarget, string.Empty);
         }
     }
 }

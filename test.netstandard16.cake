@@ -12,7 +12,7 @@ Task("VerifyAdd")
     {
         ReloadPath();
 
-        var path = EnvironmentVariable("PATH");
+        var path = GetEnvironmentPath();
         if(!path.Contains(";C:/test")) {
             throw new Exception(string.Format("Add failed. Path was '{0}'", path)); 
         }
@@ -31,7 +31,7 @@ Task("VerifyRemove")
     {
         ReloadPath();
 
-        var path = EnvironmentVariable("PATH");
+        var path = GetEnvironmentPath();
         if(path.Contains(";C:/test")) {
             throw new Exception(string.Format("Remove failed. Path was '{0}'", path)); 
         }

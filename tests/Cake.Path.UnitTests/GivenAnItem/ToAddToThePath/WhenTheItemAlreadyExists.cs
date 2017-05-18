@@ -13,7 +13,7 @@ namespace Cake.Path.UnitTests.GivenAnItem.ToAddToThePath
             var environmentWrapper = new Mock<IEnvironmentWrapper>();
             environmentWrapper.Setup(x => x.GetEnvironmentVariable("PATH", PathTarget.Machine, string.Empty)).Returns("test;test2");
 
-            var subject = new Path(new NullLog(), environmentWrapper.Object);
+            var subject = new PathWrapper(new NullLog(), environmentWrapper.Object);
             subject.Add("test", new PathSettings { Target = PathTarget.Machine });
 
             environmentWrapper.Verify(x => x.SetEnvironmentVariable(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<PathTarget>()), Times.Never);

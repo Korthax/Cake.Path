@@ -15,7 +15,7 @@ namespace Cake.Path.UnitTests.GivenAnItem.ToRemoveFromThePath
             var environmentWrapper = new Mock<IEnvironmentWrapper>();
             environmentWrapper.Setup(x => x.GetEnvironmentVariable("PATH", PathTarget.User, string.Empty)).Returns("test");
 
-            var subject = new Path(new NullLog(), environmentWrapper.Object);
+            var subject = new PathWrapper(new NullLog(), environmentWrapper.Object);
 
             Assert.Throws<ArgumentNullException>(() => { subject.Remove(new DirectoryPath("test"), null); });
         }

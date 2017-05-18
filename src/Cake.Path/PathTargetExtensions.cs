@@ -1,23 +1,12 @@
+#if (NET45)
 using System;
+#endif
 
 namespace Cake.Path
 {
-    /// <summary>
-    /// Extensions for the the PathTarget enum.
-    /// </summary>
     internal static class PathTargetExtensions
     {
 #if (NET45)
-        /// <summary>
-        /// Converts to <c>PathTarget</c> to an <c>EnvironmentVariableTarget</c>.
-        /// </summary>
-        /// <example>
-        /// <code>
-        /// var environmentVariableTarget = PathTarget.Process.GetTarget();
-        /// </code>
-        /// </example>
-        /// <returns>Returns an <c>EnvironmentVariableTarget</c>.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">Thrown when the <c>PathTarget</c> cannot be converted to an <c>EnvironmentVariableTarget</c>.</exception>
         public static EnvironmentVariableTarget GetTarget(this PathTarget self)
         {
             switch(self)

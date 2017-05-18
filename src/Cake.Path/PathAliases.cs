@@ -41,7 +41,7 @@ namespace Cake.Path
         ///   .Does(() => 
         ///   {
         ///      var settings = new PathSettings {
-        ///         Target = PathTarget.User
+        ///         Target = PathTarget.User // Target is only available in net45
         ///      }
         ///
         ///      AddToPath("C:\\Python27\\", settings);
@@ -58,7 +58,7 @@ namespace Cake.Path
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
 
-            Path.Load(context.Log)
+            PathWrapper.Load(context.Log)
                 .Add(value, pathSettings);
         }
 
@@ -92,7 +92,7 @@ namespace Cake.Path
         ///   .Does(() => 
         ///   {
         ///      var settings = new PathSettings {
-        ///         Target = PathTarget.User
+        ///         Target = PathTarget.User // Target is only available in net45
         ///      }
         ///
         ///      RemoveFromPath("C:\\Python27\\", settings);
@@ -109,7 +109,7 @@ namespace Cake.Path
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
 
-            Path.Load(context.Log)
+            PathWrapper.Load(context.Log)
                 .Remove(value, pathSettings);
         }
 
@@ -133,8 +133,60 @@ namespace Cake.Path
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
 
-            Path.Load(context.Log)
+            PathWrapper.Load(context.Log)
                 .Reload();
+        }
+
+        /// <summary>
+        /// Gets the environment's path.
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// Task("GetEnvironmentPath")
+        ///   .Does(() => 
+        ///   {
+        ///      string path = GetEnvironmentPath();
+        ///   });
+        /// </code>
+        /// </example>
+        /// <param name="context">The context.</param>
+        /// <returns>Returns a <c>string</c> containing the path</returns>
+        /// <exception cref="System.ArgumentNullException">Thrown when the <c>ICakeContext</c> is null.</exception>
+        [CakeMethodAlias]
+        public static string GetEnvironmentPath(this ICakeContext context)
+        {
+            return GetEnvironmentPath(context, new PathSettings());
+        }
+
+
+        /// <summary>
+        /// Gets the environment's path.
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// Task("GetEnvironmentPath")
+        ///   .Does(() => 
+        ///   {
+        ///      var settings = new PathSettings {
+        ///         Target = PathTarget.User // Target is only available in net45
+        ///      }
+        /// 
+        ///      string path = GetEnvironmentPath(settings);
+        ///   });
+        /// </code>
+        /// </example>
+        /// <param name="context">The context.</param>
+        /// <param name="pathSettings">Settings for the PATH.</param>
+        /// <returns>Returns a <c>string</c> containing the path</returns>
+        /// <exception cref="System.ArgumentNullException">Thrown when the <c>ICakeContext</c> is null.</exception>
+        [CakeMethodAlias]
+        public static string GetEnvironmentPath(this ICakeContext context, PathSettings pathSettings)
+        {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
+            return PathWrapper.Load(context.Log)
+                .Get(pathSettings);
         }
     }
 }

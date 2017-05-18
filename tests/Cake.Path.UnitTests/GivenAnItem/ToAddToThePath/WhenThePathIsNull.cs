@@ -14,7 +14,7 @@ namespace Cake.Path.UnitTests.GivenAnItem.ToAddToThePath
             var environmentWrapper = new Mock<IEnvironmentWrapper>();
             environmentWrapper.Setup(x => x.GetEnvironmentVariable("PATH", PathTarget.User, string.Empty)).Returns(string.Empty);
 
-            var subject = new Path(new NullLog(), environmentWrapper.Object);
+            var subject = new PathWrapper(new NullLog(), environmentWrapper.Object);
             subject.Add(new DirectoryPath("test"), new PathSettings { Target = PathTarget.User });
  
             environmentWrapper.Verify(x => x.SetEnvironmentVariable("PATH", "test", PathTarget.User), Times.Once);
